@@ -1,13 +1,17 @@
 import './database'
 import express from 'express'
+import morgan from 'morgan'
+
 import AuthRoutes from './routes/Auth'
 import CustomerRoutes from './routes/Customer'
 import FavoriteRoutes from './routes/Favorite'
+
 import Authentication from './middlewares/Authentication'
 import ErrorHandler from './middlewares/ErrorHandler'
 import NotFoundHandler from './middlewares/NotFoundHandler'
 
 const server = express()
+server.use(morgan('combined'))
 server.use(express.json())
 server.use('/auth', AuthRoutes)
 server.use('/customers', Authentication, CustomerRoutes)
