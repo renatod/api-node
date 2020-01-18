@@ -6,5 +6,13 @@ services:
       - db:/var/lib/postgresql/data
     ports:
       - 5432:5432
+  api:
+    image: renatod/node-api:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: 'db'
 volumes:
   db:
