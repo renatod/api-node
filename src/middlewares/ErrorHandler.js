@@ -6,6 +6,8 @@ export default (error, req, res, next) => {
   if (error instanceof HttpStatusError) {
     status = error.status
     message = error.message
+  } else {
+    console.error(error)
   }
   return res.status(status).send(message)
 }
