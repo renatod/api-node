@@ -1,4 +1,3 @@
-import { validationResult } from 'express-validator'
 import CustomerService from '../services/Customer'
 import ProductService from '../services/Product'
 import FavoriteService from '../services/Favorite'
@@ -18,11 +17,6 @@ class FavoriteController {
     const customer = await CustomerService.getByPk(req.params.customer_id)
     if (customer == null) {
       return next(new HttpStatusError(404, 'Customer not found.'))
-    }
-
-    const result = validationResult(req)
-    if (!result.isEmpty()) {
-      return next(new HttpStatusError(422, result.errors[0].msg))
     }
 
     const paging = {

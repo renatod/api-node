@@ -1,4 +1,3 @@
-import { validationResult } from 'express-validator'
 import CustomerService from '../services/Customer'
 import HttpStatusError from '../errors/HttpStatusError'
 
@@ -12,11 +11,6 @@ const mapResponse = (item) => {
 
 class CustomerController {
   async index(req, res, next) {
-    const result = validationResult(req)
-    if (!result.isEmpty()) {
-      return next(new HttpStatusError(422, result.errors[0].msg))
-    }
-
     const paging = {
       page: req.query.page || 1,
       pageSize: 10
@@ -41,11 +35,6 @@ class CustomerController {
   }
 
   async create(req, res, next) {
-    const result = validationResult(req)
-    if (!result.isEmpty()) {
-      return next(new HttpStatusError(422, result.errors[0].msg))
-    }
-
     const { name, email } = req.body
 
     const exists = await CustomerService.getByEmail(email)
@@ -58,11 +47,6 @@ class CustomerController {
   }
 
   async update(req, res, next) {
-    const result = validationResult(req)
-    if (!result.isEmpty()) {
-      return next(new HttpStatusError(422, result.errors[0].msg))
-    }
-
     const customer = await CustomerService.getByPk(req.params.id)
     if (customer == null) {
       return next(new HttpStatusError(404, 'Customer not found.'))

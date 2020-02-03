@@ -1,4 +1,3 @@
-import { validationResult } from 'express-validator'
 import AuthService from '../services/Auth'
 import UserService from '../services/User'
 import HttpStatusError from '../errors/HttpStatusError'
@@ -28,11 +27,6 @@ class AuthController {
   }
 
   async signup(req, res, next) {
-    const result = validationResult(req)
-    if (!result.isEmpty()) {
-      return next(new HttpStatusError(422, result.errors[0].msg))
-    }
-
     const { email, password } = req.body
 
     const exists = await UserService.getByEmail(email)
